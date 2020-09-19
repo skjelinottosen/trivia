@@ -1,8 +1,8 @@
 <template>
   <div class="main">
-    <section id="start-screen-section">
+    <section id="result-screen-section">
       <img id="logo" alt="logo" src="../assets/logo.jpg">
-      <h1>Enter name</h1>
+      <h1>Results</h1>
       <input type="text" v-model="inputName" id="input-name" placeholder="Name"/>
       <button id="btn-start" v-on:click="getName">Start</button>
     </section>
@@ -10,30 +10,15 @@
 </template>
 
 <script>
-import { getQuestions } from '../api/questions.js'
 export default {
-  name: 'StartScreen',
+  name: 'ResultScreen',
   props: {
   },
   methods:{
     getName(){
       sessionStorage.setItem('user', this.inputName);
-      this.$router.push({
-        name: 'QuestionScreen'
-      })
       console.log(sessionStorage.getItem('user'));
-    },
-     async getAllQuestions(){
-      
-      // Data from the API
-      let jsonData = await getQuestions();  
-      
-      // Stores the results array from the json object
-      let data =  await jsonData.results;
-      
-      // Stores the questions in the session storage
-      sessionStorage.setItem('questions', JSON.stringify(data));      
-    }       
+    }
   }
 }
 </script>
@@ -59,7 +44,7 @@ export default {
     margin-left:0rem;
  }
  
-#start-screen-section{
+#result-screen-section{
   width:25%;
   margin-top:4rem;
   display: flex;
@@ -68,7 +53,7 @@ export default {
   margin-right:auto;
 }
 
-#start-screen-text{
+#result-screen-text{
   width:100%;
   margin-left: auto;
   margin-right:auto; 

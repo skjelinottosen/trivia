@@ -15,12 +15,12 @@ const routes = [
   },
   {
     path: '/questions',
-    name: 'questionScreen',
+    name: 'QuestionScreen',
     component: QuestionScreen,
   },
   {
     path: '/results',
-    name: 'resultScreen',
+    name: 'ResultScreen',
     component: ResultScreen,
   },
   {
