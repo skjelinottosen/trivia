@@ -16,12 +16,15 @@ export default {
   props: {
   },
   methods:{
-    getName(){
-      sessionStorage.setItem('user', this.inputName);
+    async getName(){
+      sessionStorage.setItem('user', this.inputName); 
+      sessionStorage.setItem('counter', 1); 
+      await this.getAllQuestions(); 
+    
       this.$router.push({
         name: 'QuestionScreen'
       })
-      console.log(sessionStorage.getItem('user'));
+        
     },
      async getAllQuestions(){
       
@@ -30,13 +33,14 @@ export default {
       
       // Stores the results array from the json object
       let data =  await jsonData.results;
-      
+
       // Stores the questions in the session storage
-      sessionStorage.setItem('questions', JSON.stringify(data));      
+      sessionStorage.setItem('questions', JSON.stringify(data).replace(/&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});/ig, ''));      
     }       
   }
 }
 </script>
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

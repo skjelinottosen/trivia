@@ -4,6 +4,12 @@
       <img id="logo" alt="logo" src="../assets/logo.jpg">
       <h1>Question {{questionId }}</h1>
       <h2>{{question}}</h2>
+      <section  id="btn-alternative-section">
+        <button class="btn-alternative">{{alternativeA}}</button>
+        <button class="btn-alternative">{{alternativeB}}</button>
+        <button class="btn-alternative">{{alternativeC}}</button>
+        <button class="btn-alternative">{{alternativeD}}</button>
+      </section>
     </section>
   </div>
 </template>
@@ -18,6 +24,11 @@ export default {
       return{
         questionId: Number,
         question: String,
+        alternativeA: String,
+        alternativeB: String,
+        alternativeC: String,
+        alternativeD: String,
+
       }
   },
   created(){
@@ -28,9 +39,12 @@ export default {
       
       // Get question for session storage
       let sessionQuestion = JSON.parse(sessionStorage.getItem('questions'));
-
-        this.questionId = 1;
-        this.question = await sessionQuestion[0].question;        
+      this.questionId = parseInt(sessionStorage.getItem('counter'),10);
+      this.question = sessionQuestion[0].question;  
+      this.alternativeA =  sessionQuestion[0].correct_answer; 
+      this.alternativeB =  sessionQuestion[0].incorrect_answers[0]; 
+      this.alternativeC =  sessionQuestion[0].incorrect_answers[1]; 
+      this.alternativeD =  sessionQuestion[0].incorrect_answers[2]; 
     }    
   }
 }
@@ -54,17 +68,19 @@ export default {
     font-size: 1.8rem;
     margin:0.0rem;
     margin-left:0rem;
+    margin-top:2rem;
  }
   h2{
-    width:80%;
+    width:70%;
     font-family:  sans-serif;
     font-weight: 800;
     letter-spacing: 0.1rem;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin:0.0rem;
     margin-top:0.8rem;
     margin-left: auto;
     margin-right:auto; 
+    
  }
  
  
@@ -83,6 +99,7 @@ export default {
 }
 #logo{
   width:10%;  
+  margin-top:0.8rem;
   
 }
 
@@ -104,6 +121,35 @@ export default {
 
   #btn-start:hover{
     background-color: gray;
+    cursor: pointer;
+  }
+
+#btn-alternative-section{
+  width:74%;
+  display:flexbox;
+  justify-content: center;
+  margin-top:2rem;
+  margin-left:auto;
+  margin-right:auto;
+
+}
+  .btn-alternative{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  background-color: orange;
+  color:white;
+  border: none;
+  margin-top: 0.3rem;
+  padding: 0.2rem;
+  width:48%;
+  height:4rem;
+  font-size: 1.1rem;
+  margin-left: 0.12rem;
+  margin-right: 0.12rem;
+ }
+    .btn-alternative:hover{
+    background-color: darkslateblue;
     cursor: pointer;
   }
 </style>
