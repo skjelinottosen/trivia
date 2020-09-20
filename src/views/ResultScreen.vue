@@ -23,8 +23,13 @@ export default {
     }
   },
   created(){
+    // Gets the number of questions from session storage
     this.numberQuestions = parseInt(sessionStorage.getItem('numberQuestions'),10);
+    
+    // Gets the number of corrects answers from session storage
     this.correctAnswers = parseInt(sessionStorage.getItem('correctAnswers'),10);
+   
+   // Gets the user from session storage
     this.user = sessionStorage.getItem('user');
   },
   methods:{

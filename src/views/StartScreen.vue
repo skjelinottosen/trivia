@@ -15,8 +15,14 @@ export default {
   name: 'StartScreen',
   props: {
   },
+  data(){
+    return{
+      inputName: null
+    }
+  },
   created(){
      sessionStorage.clear();
+
   },
   methods:{
     async getName(){
