@@ -4,7 +4,7 @@
       <img id="logo" alt="logo" src="../assets/logo.jpg">
       <h1>Enter name</h1>
       <input type="text" v-model="inputName" id="input-name" placeholder="Name"/>
-      <button id="btn-start" v-on:click="getName">Start</button>
+      <button type="button" id="btn-start" v-on:click="getName">Start</button>
     </section>
   </div>
 </template>
@@ -15,6 +15,10 @@ export default {
   name: 'StartScreen',
   props: {
   },
+  created(){
+     sessionStorage.clear();
+
+  },
   methods:{
     async getName(){
       sessionStorage.setItem('user', this.inputName); 
@@ -23,8 +27,7 @@ export default {
     
       this.$router.push({
         name: 'QuestionScreen'
-      })
-        
+      })       
     },
      async getAllQuestions(){
       
@@ -36,6 +39,13 @@ export default {
 
       // Stores the questions in the session storage
       sessionStorage.setItem('questions', JSON.stringify(data).replace(/&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});/ig, ''));      
+      
+      // Stores number of questions in the session storage
+      let numberQuestions = data.length;
+      sessionStorage.setItem('numberQuestions', numberQuestions);
+
+       // Stores number of correct answers in the session storage
+      sessionStorage.setItem('correctAnswers', 0);
     }       
   }
 }
@@ -88,6 +98,7 @@ export default {
     margin-left: auto;
     margin-right:auto; 
     padding: 0.36rem;
+    margin-top:0.3rem;
     align-content: flex-end;
  }
 
@@ -108,7 +119,7 @@ export default {
 }
 
   #btn-start:hover{
-    background-color: gray;
+    background-color: darkslateblue;
     cursor: pointer;
   }
 </style>
