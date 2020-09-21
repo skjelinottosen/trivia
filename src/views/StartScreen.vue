@@ -22,35 +22,43 @@ export default {
   },
   created(){
      sessionStorage.clear();
-
   },
   methods:{
     async getName(){
-      sessionStorage.setItem('user', this.inputName); 
-      sessionStorage.setItem('counter', 1); 
-      await this.getAllQuestions(); 
+      try{
+        sessionStorage.setItem('user', this.inputName); 
+        sessionStorage.setItem('counter', 1); 
+        await this.getAllQuestions(); 
     
-      this.$router.push({
-        name: 'QuestionScreen'
-      })       
+        this.$router.push({
+          name: 'QuestionScreen'
+        }) 
+      } 
+      catch(error){
+        console.error(error);
+      }     
     },
-     async getAllQuestions(){
-      
-      // Data from the API
-      let jsonData = await getQuestions();  
-      
-      // Stores the results array from the json object
-      let data =  await jsonData.results;
+    async getAllQuestions(){
+      try{
+        // Data from the API
+        let jsonData = await getQuestions();  
+        
+        // Stores the results array from the json object
+        let data =  await jsonData.results;
 
-      // Stores the questions in the session storage
-      sessionStorage.setItem('questions', JSON.stringify(data).replace(/&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});/ig, ''));      
-      
-      // Stores number of questions in the session storage
-      let numberQuestions = data.length;
-      sessionStorage.setItem('numberQuestions', numberQuestions);
+        // Stores the questions in the session storage
+        sessionStorage.setItem('questions', JSON.stringify(data).replace(/&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});/ig, ''));      
+        
+        // Stores number of questions in the session storage
+        let numberQuestions = data.length;
+        sessionStorage.setItem('numberQuestions', numberQuestions);
 
-       // Stores number of correct answers in the session storage
-      sessionStorage.setItem('correctAnswers', 0);
+        // Stores number of correct answers in the session storage
+        sessionStorage.setItem('correctAnswers', 0);
+      }
+      catch(error){
+        console.error(error);
+      }
     }       
   }
 }

@@ -34,10 +34,15 @@ export default {
   },
   methods:{
     newGame(){
-      this.$router.push({
+      try{
+        this.$router.push({
         name: 'StartScreen'
-      }) 
-      sessionStorage.clear();
+        }) 
+       sessionStorage.clear();
+      }
+      catch(error){
+        console.error(error);
+      }  
     }
   }
 }

@@ -35,62 +35,66 @@ export default {
   },
   methods: {
     async getQuestion(){    
-      // Gets number of questions from session storage
-      const numberQuestions = parseInt(sessionStorage.getItem('numberQuestions'),10);
-     
-     // Gets current question number from session storage
-      this.questionId = parseInt(sessionStorage.getItem('counter'),10);
-     
-      // Checks if there are more questions left
-      if(this.questionId < numberQuestions){
-    
-        // Gets questions from session storage
-        const sessionQuestion = JSON.parse(sessionStorage.getItem('questions'));
-        
-        // Matches the index of the question list
-        let counter = this.questionId-1;
-        this.question = sessionQuestion[counter].question;  
-        this.correctAnswer = sessionQuestion[counter].correct_answer;
-        // Alternative in sorted order
-        let alternatives = [
-          this.correctAnswer, 
-          sessionQuestion[counter].incorrect_answers[0],
-          sessionQuestion[counter].incorrect_answers[1],
-          sessionQuestion[counter].incorrect_answers[2]
-        ];
+        // Gets number of questions from session storage
+        const numberQuestions = parseInt(sessionStorage.getItem('numberQuestions'),10);
+      
+        // Gets current question number from session storage
+        this.questionId = parseInt(sessionStorage.getItem('counter'),10);
+      
+        // Checks if there are more questions left
+        if(this.questionId < numberQuestions){
+      
+          // Gets questions from session storage
+          const sessionQuestion = JSON.parse(sessionStorage.getItem('questions'));
+          
+          // Matches the index of the question list
+          let counter = this.questionId-1;
+          this.question = sessionQuestion[counter].question;  
+          this.correctAnswer = sessionQuestion[counter].correct_answer;
+          // Alternative in sorted order
+          let alternatives = [
+            this.correctAnswer, 
+            sessionQuestion[counter].incorrect_answers[0],
+            sessionQuestion[counter].incorrect_answers[1],
+            sessionQuestion[counter].incorrect_answers[2]
+          ];
 
-        // Shuffles the alteratives 
-        let alternativesShuffled = this.shuffle(alternatives)
-        this.alternativeA =  alternativesShuffled[0];
-        this.alternativeB =  alternativesShuffled[1]; 
-        this.alternativeC =  alternativesShuffled[2]; 
-        this.alternativeD =  alternativesShuffled[3]; 
-      }
-    },
-    // Gets the answer from the user
-    async getAnswer(answer){
-      const numberQuestions = parseInt(sessionStorage.getItem('numberQuestions'),10);
-      this.questionId++;
-     
-     // Counts correct answers in session storage
-     if(answer == this.correctAnswer){
-        let correctAnswers = parseInt(sessionStorage.getItem('correctAnswers'),10)+1;
-        sessionStorage.setItem('correctAnswers', correctAnswers)
-      }
+          // Shuffles the alteratives 
+          let alternativesShuffled = this.shuffle(alternatives)
+          this.alternativeA =  alternativesShuffled[0];
+          this.alternativeB =  alternativesShuffled[1]; 
+          this.alternativeC =  alternativesShuffled[2]; 
+          this.alternativeD =  alternativesShuffled[3]; 
+        }
+      },
+      // Gets the answer from the user
+      async getAnswer(answer){
+        try{
+          const numberQuestions = parseInt(sessionStorage.getItem('numberQuestions'),10);
+          this.questionId++;
+          
+          // Counts correct answers in session storage
+          if(answer == this.correctAnswer){
+            let correctAnswers = parseInt(sessionStorage.getItem('correctAnswers'),10)+1;
+            sessionStorage.setItem('correctAnswers', correctAnswers)
+          }
 
-      // Redirects to result if the quiz is done
-      if(this.questionId > numberQuestions){
-        this.$router.push({
-          name: 'ResultScreen'
-        })  
-      }
+          // Redirects to result if the quiz is done
+          if(this.questionId > numberQuestions){
+            this.$router.push({
+              name: 'ResultScreen'
+            })  
+          }     
+          // Counts questions
+          sessionStorage.setItem('counter',  this.questionId); 
 
-      // Counts questions
-      sessionStorage.setItem('counter',  this.questionId); 
-   
-      // Next question
-      await this.getQuestion();
-    },   
+          // Next question
+          await this.getQuestion();
+      }
+      catch(error){
+         console.error(error);
+    }
+  },   
     // Shuffles the alternatives using the Fisher–Yates shuffle
     shuffle(array){
       let currentIndex = array.length, tempValue, randomIndex;
@@ -109,11 +113,16 @@ export default {
       }
       return array;
     },
-     newGame(){
-      this.$router.push({
-        name: 'StartScreen'
-      }) 
-      sessionStorage.clear();
+    newGame(){
+      try{
+        this.$router.push({
+          name: 'StartScreen'
+        }) 
+        sessionStorage.clear();
+       }
+        catch(error){
+          console.error(error);
+      }       
     }
   }
 }
