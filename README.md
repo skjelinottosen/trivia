@@ -6,7 +6,7 @@ The application uses session storage for storing game data for faster access.
 ### Start Screen
 ![](/StartScreenView.PNG)
 
-### Question
+### Questions
 ![](/QuestionView.PNG)
 
 ### Result
