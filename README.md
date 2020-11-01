@@ -1,8 +1,16 @@
+# Trivia
 TriviaApp is a Trivia game written with Vue.
 The questions in the application are retrieved from a movie question's API called Open Trivia Database (https://opentdb.com/).
 The application uses session storage for storing game data for faster access.
 
-# trivia-app
+### Start Screen
+![](/StartScreenView.PNG)
+
+### Question
+![](/QuestionView.PNG)
+
+### Result
+![](/ResultView.PNG)
 
 ## Project setup
 ```
